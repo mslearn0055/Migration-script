@@ -14,9 +14,9 @@ if [ $? -ne 0 ]; then
   exit 1
 else 
   cd wandisco_$source_repo_name
-  git remote add origin "$targetRepo"
-  git push origin --all
-  git push origin --tags 
+  git remote add neworigin "$targetRepo"
+  git push neworigin --all
+  git push neworigin --tags 
   cd ..
   rm -rf wandisco_$source_repo_name
 fi
