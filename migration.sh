@@ -1,22 +1,31 @@
-#!/bin/bash 
+#!/bin/bash
 
 sourceRepo="$1"
 targetRepo="$2"
 
-# Fixing the syntax for extracting the source repo name
+# Extract the repository name without the .git suffix
 source_repo_name=$(basename "$sourceRepo" .git)
 
-# Fixing the condition and syntax errors in the if statement
+# Clone the source repository as a mirror
 git clone --mirror "$sourceRepo" wandisco_$source_repo_name
 
+# Check if the clone operation was successful
 if [ $? -ne 0 ]; then 
-  echo "source repo not found"
+  echo "Source repository not found"
   exit 1
 else 
   cd wandisco_$source_repo_name
-  git remote add neworigin "$targetRepo"
-  git push neworigin --all
-  git push neworigin --tags 
+  
+  # Remove the existing origin remote if it exists
+  git remote remove origin 2>/dev/null
+  
+  # Add the new origin remote with authentication
+  git remote add origin "$targetRepo"
+  
+  # Push all references to the new remote
+  git push --mirror origin
+  
+  # Navigate back and remove the temporary directory
   cd ..
   rm -rf wandisco_$source_repo_name
 fi
