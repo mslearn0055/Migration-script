@@ -1,5 +1,5 @@
-import xlrd
-import pandas as pd
+#import xlrd
+#import pandas as pd
 import json
 import sys
 
