@@ -1,6 +1,6 @@
-import sys
-import pandas as pd
-import xlrd
+#import sys
+#import pandas as pd
+#import xlrd
 
 def fileconvertion(filepath):
     try:
